@@ -85,7 +85,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
    * measurements.
    */
   if (isInitialized_ == false) {
-    std::cout << "Step1: initializing the UKF" << std::endl;
+    std::cout << "Starting the UKF" << std::endl;
 
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
       std::cout << "INIT RADAR: " << std::endl;
