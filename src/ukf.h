@@ -4,6 +4,8 @@
 #include "Eigen/Dense"
 #include "measurement_package.h"
 
+#include <iostream>
+
 class UKF {
  public:
   /**
@@ -41,9 +43,13 @@ class UKF {
    */
   void UpdateRadar(MeasurementPackage meas_package);
 
+  /**
+   * Normalization function for values between -PI and PI used for working with angles
+   */
+  double NormalizePI(double angle);
 
   // initially set to false, set to true in first call of ProcessMeasurement
-  bool is_initialized_;
+  bool isInitialized_;
 
   // if this is false, laser measurements will be ignored (except for init)
   bool use_laser_;
@@ -61,7 +67,7 @@ class UKF {
   Eigen::MatrixXd Xsig_pred_;
 
   // time when the state is true, in us
-  long long time_us_;
+  double time_us_;
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
   double std_a_;
@@ -95,6 +101,12 @@ class UKF {
 
   // Sigma point spreading parameter
   double lambda_;
+
+private:
+  Eigen::MatrixXd RLidar_;
+  Eigen::MatrixXd RRadar_;
+  Eigen::MatrixXd HLidar_;
+
 };
 
 #endif  // UKF_H
